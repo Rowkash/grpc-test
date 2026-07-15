@@ -1,0 +1,18 @@
+services:
+  producer:
+    build:
+      context: ./producer
+      target: production
+    container_name: producer
+    ports:
+      - "5000:5000"
+
+  consumer:
+    build:
+      context: ./consumer
+      target: production
+    container_name: consumer
+    environment:
+      - PRODUCER_GRPC_URL=producer:5000
+    depends_on:
+      - producer
